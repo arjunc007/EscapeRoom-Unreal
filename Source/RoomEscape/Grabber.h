@@ -24,6 +24,11 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+private:
+	//Range of the raycast in cm
+	UPROPERTY(EditAnywhere)
+	float Reach = 100.0f;
+
 		
 	
 };
