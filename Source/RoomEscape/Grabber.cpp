@@ -40,14 +40,35 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT PlayerLocation, OUT PlayerRotation);
 
-	//UE_LOG(LogTemp, Warning, TEXT("Position:%s Rotation:%s"), *PlayerLocation.ToString(), *PlayerRotation.ToString())
-
 	FVector LineTraceEnd = PlayerLocation + PlayerRotation.Vector() * Reach;
 
-	DrawDebugLine(GetWorld(), PlayerLocation, LineTraceEnd, FColor::Red, false, 0.f, 0.f, 10.f);
+	DrawDebugLine(GetWorld(), 
+		PlayerLocation, 
+		LineTraceEnd, 
+		FColor::Red, 
+		false, 
+		0.f, 
+		0.f, 
+		10.f
+	);
 
-	//Raycast out to reach distance
+	///Setup query params
+	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
 
-	//See what is hit
+	///Line-trace (aka Raycast) out to reach distance
+	FHitResult Hit;
+	GetWorld()->LineTraceSingleByObjectType(OUT Hit,
+		PlayerLocation,
+		LineTraceEnd,
+		FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),
+		TraceParameters
+	);
+
+	///See what is hit
+	AActor* ActorHit = Hit.GetActor();
+	if (ActorHit)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Line Trace Hit: %s"), *(ActorHit->GetName()))
+	}
 }
 
