@@ -69,10 +69,8 @@ float UOpenDoor::GetTotalMassOfActorsOnPlate()
 	float TotalMass = 0;
 	TArray<AActor*> OverlappingActors;
 
-	if(PressurePlate)
+	if (!PressurePlate) { return TotalMass; }
 		PressurePlate->GetOverlappingActors(OUT OverlappingActors);
-
-	UE_LOG(LogTemp, Warning, TEXT("Number of Actors: %d"), OverlappingActors.Num())
 
 	for (const auto& Actor : OverlappingActors)
 	{
