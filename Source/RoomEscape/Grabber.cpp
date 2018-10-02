@@ -102,13 +102,6 @@ FHitResult UGrabber::GetFirstPhysicsBodyInReach()
 		TraceParameters
 	);
 
-	///See what is hit
-	AActor* ActorHit = HitResult.GetActor();
-	if (ActorHit)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Line Trace Hit: %s"), *(ActorHit->GetName()))
-	}
-
 	return HitResult;
 }
 
